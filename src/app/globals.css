@@ -3,12 +3,31 @@
 
 :root {
   /* PALETA DE COLORES */
-  --background-page: #F8FAFC;
+  --background-page: #f8fafc;
   --primary: #023048;
-  --secondary: #FFB702;
-  --muted: #6B7280;
-  --action: #229EBD;
-  
+  --secondary: #ffb702;
+  --muted: #6b7280;
+  --action: #229ebd;
+  --background-gradient: linear-gradient(
+    180deg,
+    #023048 0%,
+    #05334a 16.83%,
+    #0e3950 31.44%,
+    #1a445a 44.01%,
+    #2a5166 54.71%,
+    #3d6173 63.73%,
+    #537283 71.23%,
+    #698593 77.4%,
+    #8098a4 82.41%,
+    #97abb5 86.45%,
+    #aebdc6 89.68%,
+    #c3ced5 92.28%,
+    #d5dde3 94.44%,
+    #e5eaee 96.33%,
+    #f1f4f7 98.12%,
+    #f8fafc 100%
+  );
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
