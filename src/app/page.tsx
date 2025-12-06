@@ -1,3 +1,4 @@
+import CallToAction from "@/src/home/components/CallToAction";
 import HowItWorks from "@/src/home/components/HowItWorks";
 import Benefits from "@/src/home/components/Benefits";
 import Features from "@/src/home/components/Features";
@@ -13,6 +14,7 @@ export default function Home() {
         <Features />
         <HowItWorks />
         <Benefits />
+        <CallToAction />
       </main>
       <div
         className="absolute top-0 w-full h-[850px]"
