@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 
 function Hero() {
   return (
-    <div className="flex flex-col items-center gap-10 pt-10">
+    <section className="flex flex-col items-center gap-10 pt-16">
       <div className="text-4xl font-bold text-center text-white sm:text-6xl xl:text-7xl">
         <p>
           Toma el control de <span className="text-secondary">tus</span>
@@ -32,7 +32,7 @@ function Hero() {
       <div className="w-[90%] h-[450px] bg-blue-100 rounded-2xl xl:w-[75%]">
         dashboard image
       </div>
-    </div>
+    </section>
   );
 }
 
