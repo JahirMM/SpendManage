@@ -1,7 +1,8 @@
+import HowItWorks from "@/src/home/components/HowItWorks";
+import Benefits from "@/src/home/components/Benefits";
 import Features from "@/src/home/components/Features";
 import Header from "@/src/home/components/Header";
 import Hero from "@/src/home/components/Hero";
-import HowItWorks from "../home/components/HowItWorks";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         <Hero />
         <Features />
         <HowItWorks />
+        <Benefits />
       </main>
       <div
         className="absolute top-0 w-full h-[850px]"

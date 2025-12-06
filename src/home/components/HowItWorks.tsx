@@ -70,10 +70,10 @@ function HowItWorks() {
               <span className="text-3xl font-bold text-secondary">
                 {item.id}
               </span>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="text-lg font-bold text-primary md:text-xl">
                 {item.title}
               </h3>
-              <p className="mx-auto text-sm max-w-60 text-muted">
+              <p className="mx-auto text-sm text-gray-600 max-w-60">
                 {item.description}
               </p>
             </article>

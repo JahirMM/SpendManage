@@ -56,7 +56,7 @@ function Features() {
               <span className="inline-block p-2 rounded-md bg-secondary">
                 <feature.icon className="text-white size-5" />
               </span>
-              <h3 className="text-lg font-bold text-primary">
+              <h3 className="mt-2 mb-3 text-lg font-bold text-primary">
                 {feature.title}
               </h3>
               <p className="text-sm">{feature.description}</p>
