@@ -9,7 +9,7 @@ export default function Home() {
         <Hero />
       </main>
       <div
-        className="absolute top-0 w-full h-[80%]"
+        className="absolute top-0 w-full h-[850px]"
         style={{ background: "var(--background-gradient)" }}
       >
       </div>
