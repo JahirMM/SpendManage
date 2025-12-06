@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <>
-      <header className="relative z-50 flex items-center justify-between max-w-5xl px-4 py-3 mx-auto text-black bg-background-page xl:max-w-7xl xl:px-0">
+      <header className="relative z-50 flex items-center justify-between max-w-5xl px-4 py-3 mx-auto text-white bg-primary xl:max-w-7xl xl:px-0">
         <span className="text-sm">SpendManage</span>
         <nav className="hidden md:block">
           <ul className="flex gap-5 text-sm">
@@ -54,11 +54,11 @@ function Header() {
         </div>
       </header>
       <div
-        className={`absolute shadow z-10 top-11 px-4 py-5 w-full bg-white md:hidden transition-transform duration-300 ease-in-out ${
+        className={`absolute shadow z-40 top-11 px-4 py-5 w-full bg-primary md:hidden transition-transform duration-300 ease-in-out ${
           showMenu ? "transform translate-y-0" : "transform -translate-y-full"
         }`}
       >
-        <nav>
+        <nav className="text-white">
           <ul className="flex flex-col gap-5 text-sm">
             <li>
               <a href="" className="hover:text-action hover:font-bold">
@@ -78,7 +78,7 @@ function Header() {
           </ul>
         </nav>
         <div className="mt-5 space-x-8 text-sm">
-          <a href="" className="hover:text-action hover:font-bold">Iniciar sesión</a>
+          <a href="" className="text-white hover:text-action hover:font-bold">Iniciar sesión</a>
           <Button type="button" size="sm">
             <a href="">Registrarse</a>
           </Button>

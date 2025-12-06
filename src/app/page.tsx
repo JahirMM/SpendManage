@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="relative z-50 max-w-5xl px-4 mx-auto xl:max-w-7xl xl:px-0">
+      <main className="relative z-30 max-w-5xl px-4 mx-auto xl:max-w-7xl xl:px-0">
         <Hero />
       </main>
       <div
