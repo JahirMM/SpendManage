@@ -12,7 +12,7 @@ import DashboardHeader from "@/src/dashboard/components/DashboardHeader";
 
 function Dashboard() {
   return (
-    <div className="max-w-5xl px-4 mx-auto md:max-w-7xl xl:p-0">
+    <div className="max-w-5xl px-4 py-3 mx-auto md:max-w-7xl xl:p-0">
       <DashboardHeader />
       <div className="grid grid-cols-1 gap-3 mt-5 lg:grid-cols-3">
         <section className="flex flex-col gap-3">

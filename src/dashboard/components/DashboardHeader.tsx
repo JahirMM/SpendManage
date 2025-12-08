@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 function DashboardHeader() {
   return (
-    <header className="flex flex-wrap justify-between gap-0-5 items-center pt-8 pb-6 md:pt-12 md:pb-4">
+    <header className="flex flex-wrap justify-between gap-0-5 items-center pb-6 pt-2 md:pb-4 xl:pt-10">
       <p className="text-xl">
         Bienvenido de nuevo, <span className="font-bold">Jahir</span>
       </p>
