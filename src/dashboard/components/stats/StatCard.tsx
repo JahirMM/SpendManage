@@ -7,13 +7,13 @@ interface StatCardProps {
 }
 function StatCard({ title, value, isMoney }: StatCardProps) {
   return (
-    <Card className="border-none gap-0 md:py-4">
-      <CardHeader className="p-0 md:px-4">
+    <Card className="gap-0 border-none md:py-4">
+      <CardHeader>
         <CardTitle className="text-base font-bold text-muted">
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="m-0 px-4">
+      <CardContent className="m-0">
         {isMoney ? (
           <>
             <span className="mr-1 text-sm font-semibold">$</span>
