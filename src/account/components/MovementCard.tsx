@@ -1,5 +1,5 @@
 import MovementDetails from "@/src/account/components/MovementDetails";
-import { ProgressBar } from "@/src/account/components/ProgressBar";
+import { ProgressBar } from "@/src/shared/components/ProgressBar";
 import { SquarePen, Trash } from "lucide-react";
 
 function MovementCard() {
@@ -27,7 +27,7 @@ function MovementCard() {
       <p className="mt-3 mb-10 text-sm">Se compro pollo</p>
       <div className="space-y-4">
         <MovementDetails />
-        <ProgressBar progress={50} />
+        <ProgressBar progress={30} />
       </div>
     </div>
   );
