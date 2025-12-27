@@ -30,17 +30,17 @@ function AddMovementForm({ setOpenDialog }: AddMovementFormProps) {
           ¿Incluye intereses o cargos extras?
         </p>
         <RadioGroup>
-          <div className="flex items-center gap-3">
+          <div className="flex gap-3 items-center">
             <RadioGroupItem value="paid" id="paid" />
             <Label htmlFor="paid">Si</Label>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex gap-3 items-center">
             <RadioGroupItem value="not-paid" id="not-paid" />
             <Label htmlFor="not-paid">No</Label>
           </div>
         </RadioGroup>
         {/* CON CARGO */}
-        <div className="space-y-2 mt-4">
+        <div className="mt-4 space-y-2">
           <Label htmlFor="final-amount">Monto final</Label>
           <Input id="final-amount" type="number" />
         </div>
@@ -53,15 +53,18 @@ function AddMovementForm({ setOpenDialog }: AddMovementFormProps) {
         <Label htmlFor="">Fecha movimiento</Label>
         <Input id="" type="date" />
       </div>
-      <div className="grid grid-cols-2 gap-2 mt-10">
+      <div className="grid grid-cols-1 gap-2 mt-10 sm:grid-cols-2">
         <Button
           type="button"
           variant="outline"
           onClick={() => setOpenDialog(false)}
+          className="order-2 sm:order-1"
         >
           Cancelar
         </Button>
-        <Button type="submit">Agregar movimiento</Button>
+        <Button type="submit" className="order-1 sm:order-2">
+          Agregar movimiento
+        </Button>
       </div>
     </form>
   );
