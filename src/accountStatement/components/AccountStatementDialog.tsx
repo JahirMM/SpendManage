@@ -5,12 +5,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ProgressBar } from "@/src/shared/components/ProgressBar";
+
+import AccountStatementSummary from "@/src/accountStatement/components/AccountStatementSummary";
+import AccountStatementHeader from "@/src/accountStatement/components/AccountStatementHeader";
+import MovementsList from "@/src/accountStatement/components/MovementsList";
 
 import { Dispatch, SetStateAction } from "react";
-import AccountStatementHeader from "./AccountStatementHeader";
-import AccountStatementSummary from "./AccountStatementSummary";
-import MovementsList from "./MovementsList";
 
 interface AccountStatementProps {
   openDialog: boolean;
@@ -25,7 +25,9 @@ function AccountStatementDialog({
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Estado de cuenta</DialogTitle>
+          <DialogTitle className="text-primary text-xl font-bold">
+            Estado de cuenta
+          </DialogTitle>
           <DialogDescription>Diciembre 2025</DialogDescription>
         </DialogHeader>
         <div>
