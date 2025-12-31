@@ -1,12 +1,18 @@
 "use client";
 
 import EditAccountDialog from "@/src/editAccount/components/EditAccountDialog";
+import WarningDialog from "@/src/shared/components/WarningDialog";
 import { MoveLeft, SquarePen, Trash } from "lucide-react";
 import { useState } from "react";
 
 function AccountHeader() {
   const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
+
   const toggleEditDialog = () => setShowEditDialog(!showEditDialog);
+  const toggleWarningDialog = () =>
+    setShowEditDialogWarningDialog(!showWarningDialog);
+
   return (
     <>
       <header>
@@ -33,6 +39,7 @@ function AccountHeader() {
                   type="button"
                   aria-label="Eliminar cuenta"
                   className="p-1 rounded-md transition duration-300 cursor-pointer hover:bg-gray-200/80"
+                  onClick={toggleWarningDialog}
                 >
                   <Trash className="text-red-600 size-5" />
                 </button>
@@ -62,6 +69,7 @@ function AccountHeader() {
               type="button"
               aria-label="Eliminar cuenta"
               className="p-1 rounded-md transition duration-300 cursor-pointer hover:bg-gray-200/80"
+              onClick={toggleWarningDialog}
             >
               <Trash className="text-red-600 size-5" />
             </button>
@@ -71,6 +79,14 @@ function AccountHeader() {
       <EditAccountDialog
         open={showEditDialog}
         setShowEditDialog={setShowEditDialog}
+      />
+      <WarningDialog
+        open={showWarningDialog}
+        onOpenChange={toggleWarningDialog}
+        title="Eliminar cuenta"
+        description="¿Estás seguro de eliminar esta cuenta?"
+        actionLabel="Eliminar"
+        onAction={() => console.log("Eliminar")}
       />
     </>
   );

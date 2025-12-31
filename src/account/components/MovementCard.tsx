@@ -4,9 +4,14 @@ import { ProgressBar } from "@/src/shared/components/ProgressBar";
 
 import { SquarePen, Trash } from "lucide-react";
 import { useState } from "react";
+import WarningDialog from "@/src/shared/components/WarningDialog";
 
 function MovementCard() {
   const [openEditMovementDialog, setOpenEditMovementDialog] = useState(false);
+  const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
+
+  const toggleWarningDialog = () =>
+    setShowEditDialogWarningDialog(!showWarningDialog);
 
   return (
     <>
@@ -26,6 +31,7 @@ function MovementCard() {
               type="button"
               aria-label="Eliminar cuenta"
               className="p-1 rounded-md transition duration-300 cursor-pointer hover:bg-gray-200/80"
+              onClick={toggleWarningDialog}
             >
               <Trash className="text-red-600 size-5" />
             </button>
@@ -40,6 +46,14 @@ function MovementCard() {
       <EditMovementDialog
         openDialog={openEditMovementDialog}
         setOpenDialog={setOpenEditMovementDialog}
+      />
+      <WarningDialog
+        open={showWarningDialog}
+        onOpenChange={toggleWarningDialog}
+        title="Eliminar movimiento"
+        description="¿Estás seguro de eliminar este movimiento?"
+        actionLabel="Eliminar"
+        onAction={() => {}}
       />
     </>
   );
