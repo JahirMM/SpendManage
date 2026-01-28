@@ -1,3 +1,5 @@
+"use client";
+
 import CallToAction from "@/src/home/components/CallToAction";
 import HowItWorks from "@/src/home/components/HowItWorks";
 import Benefits from "@/src/home/components/Benefits";
@@ -5,7 +7,29 @@ import Features from "@/src/home/components/Features";
 import Header from "@/src/home/components/Header";
 import Hero from "@/src/home/components/Hero";
 
+import { supabase } from "../shared/lib/supabaseClient";
+import { useEffect } from "react";
+
 export default function Home() {
+  // tan solo es una pruba rapida
+  const getUsers = async () => {
+    const { data, error } = await supabase.from("users").select("*");
+
+    if (error) {
+      console.log("ERROR al obtener la lista de usuario" + error);
+      return [];
+    }
+
+    console.log("=====");
+    console.log(data);
+    console.log("=====");
+    return data;
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
       <Header />
