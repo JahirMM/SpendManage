@@ -1,11 +1,11 @@
 "use client";
 
-import CallToAction from "@/src/home/components/CallToAction";
-import HowItWorks from "@/src/home/components/HowItWorks";
-import Benefits from "@/src/home/components/Benefits";
-import Features from "@/src/home/components/Features";
-import Header from "@/src/home/components/Header";
-import Hero from "@/src/home/components/Hero";
+import CallToAction from "@/src/modules/home/components/CallToAction";
+import HowItWorks from "@/src/modules/home/components/HowItWorks";
+import Benefits from "@/src/modules/home/components/Benefits";
+import Features from "@/src/modules/home/components/Features";
+import Header from "@/src/modules/home/components/Header";
+import Hero from "@/src/modules/home/components/Hero";
 
 import { supabase } from "../shared/lib/supabaseClient";
 import { useEffect } from "react";

@@ -1,4 +1,4 @@
-import LoginForm from "@/src/auth/login/components/LoginForm";
+import LoginForm from "@/src/modules/auth/login/components/LoginForm";
 
 function page() {
   return (
@@ -9,7 +9,11 @@ function page() {
         </div>
 
         <div className="w-full h-96 rounded-xl">
-            <img src="/images/login/login.webp" alt="Login image" className="w-full h-full" />
+          <img
+            src="/images/login/login.webp"
+            alt="Login image"
+            className="w-full h-full"
+          />
         </div>
 
         <div>
