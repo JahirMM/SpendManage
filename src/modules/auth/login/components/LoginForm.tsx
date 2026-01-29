@@ -1,7 +1,6 @@
 "use client";
 
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
@@ -9,70 +8,35 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLogin } from "../hooks/useLogin";
 
 const Credentials = z.object({
   email: z.email("Correo electrónico inválido"),
   password: z.string().min(8, "La contraseña debe tener al menos 6 caracteres"),
 });
 
-function LoginForm() {
-  const router = useRouter();
+type Credentials = z.infer<typeof Credentials>;
 
+function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+
+  const { mutateAsync, isPending } = useLogin();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Credentials>({
+    resolver: zodResolver(Credentials),
   });
 
-  const [errors, setErrors] = useState<{
-    email?: string;
-    password?: string;
-    general?: string;
-  }>({});
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setErrors({});
-
-    const result = Credentials.safeParse(formData);
-
-    if (!result.success) {
-      // Si hay errores de formato, los mostramos específicamente
-      const formattedErrors: { email?: string; password?: string } = {};
-      result.error.issues.forEach((err) => {
-        if (err.path[0] === "email") formattedErrors.email = err.message;
-        if (err.path[0] === "password") formattedErrors.password = err.message;
-      });
-      setErrors(formattedErrors);
-      setIsLoading(false);
-      return;
-    }
-
+  const onSubmit = async (data: Credentials) => {
     try {
-      // TODO: Implemetacion futura
-      // consumir servicio de login
-      //
-      // if (!response.ok) {
-      //   setErrors({
-      //     general: "Credenciales inválidas. Verifica tu email y contraseña."
-      //   });
-      //   setIsLoading(false);
-      //   return;
-      // }
-
-      console.log(formData);
-
-      setTimeout(() => {
-        setIsLoading(false);
-        // router.push("/dashboard");
-      }, 1000);
+      await mutateAsync(data);
     } catch (error) {
-      setErrors({
-        general: "Ocurrió un error. Intenta nuevamente.",
-      });
-      setIsLoading(false);
+      console.error("Error en login:", error);
     }
   };
 
@@ -93,7 +57,7 @@ function LoginForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="email" className="font-medium text-primary">
               Correo electrónico
@@ -104,15 +68,12 @@ function LoginForm() {
                 id="email"
                 type="email"
                 placeholder="tu@email.com"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                {...register("email")}
                 className="py-6 pl-10 border-gray-200 focus:border-action focus:ring-action"
                 required
               />
               {errors.email && (
-                <p className="text-sm text-red-500">{errors.email}</p>
+                <p className="text-sm text-red-500">{errors.email.message}</p>
               )}
             </div>
           </div>
@@ -127,10 +88,7 @@ function LoginForm() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                {...register("password")}
                 className="py-6 pl-10 pr-10 border-gray-200 focus:border-action focus:ring-action"
                 required
               />
@@ -147,22 +105,15 @@ function LoginForm() {
               </button>
             </div>
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password}</p>
+              <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-
-          {errors.general && (
-            <div className="p-3 text-sm text-red-600 border border-red-200 rounded-md bg-red-50">
-              {errors.general}
-            </div>
-          )}
-
           <Button
             type="submit"
-            disabled={isLoading}
+            disabled={isPending}
             className="w-full py-6 text-lg font-medium text-white bg-action hover:bg-action/90"
           >
-            {isLoading ? "Ingresando..." : "Iniciar sesión"}
+            {isPending ? "Ingresando..." : "Iniciar sesión"}
           </Button>
         </form>
 

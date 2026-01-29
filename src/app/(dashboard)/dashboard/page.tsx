@@ -1,4 +1,4 @@
-import Dashboard from "@/src/dashboard/components/Dashboard";
+import Dashboard from "@/src/modules/dashboard/components/Dashboard";
 
 function page() {
   return <Dashboard />;

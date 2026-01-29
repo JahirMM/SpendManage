@@ -1,6 +1,8 @@
 import { Nunito, Inter, Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
+import TanstackProvider from "../shared/providers/TanstackProvider";
+import { Toaster } from "sonner";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -34,7 +36,10 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} ${inter.variable} ${roboto.variable} font-sans antialiased`}
       >
-        {children}
+        <TanstackProvider>
+          {children}
+          <Toaster position="top-right" richColors />
+        </TanstackProvider>
       </body>
     </html>
   );
