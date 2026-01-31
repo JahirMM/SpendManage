@@ -1,7 +1,7 @@
 import { CreditCard } from "lucide-react";
 
 interface AccountCardProps {
-  type: "card" | "normal";
+  type: string;
   title: string;
   closingDate: number | null;
   paymentDate: number;
