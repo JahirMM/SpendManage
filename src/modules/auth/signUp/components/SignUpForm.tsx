@@ -65,7 +65,7 @@ function SignUpForm() {
       }
 
       if (result.success && result.userId) {
-        await mutateUser({ id: result.userId, names: data.name });
+        await mutateUser({ id: result.userId, name: data.name });
       }
     } catch (error) {
       console.error("Error en el registro:", error);

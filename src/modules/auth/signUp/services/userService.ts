@@ -2,7 +2,7 @@ import { supabaseClient } from "@/src/shared/lib/supabaseClient";
 
 interface InserUserRequest {
   id: string;
-  names: string;
+  name: string;
 }
 
 export const userService = async (request: InserUserRequest) => {

@@ -5,8 +5,7 @@ import { toast } from "sonner";
 
 export const useUser = () => {
   return useMutation({
-    mutationFn: (request: { id: string; names: string }) =>
-      userService(request),
+    mutationFn: (request: { id: string; name: string }) => userService(request),
 
     onError: (error) => {
       toast.error(
