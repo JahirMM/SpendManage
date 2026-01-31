@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 
 interface SignUpResult {
   success: boolean;
+  userId?: string;
   error?: string;
   errorType?: "emailAlreadyExists" | "other";
 }
@@ -99,6 +100,7 @@ export async function signUpAction(
 
     return {
       success: true,
+      userId: newUser.user.id,
     };
   } catch (error) {
     console.error("Error inesperado en signUpAction:", error);

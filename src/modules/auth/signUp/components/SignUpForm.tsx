@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
+import { useUser } from "../hooks/useUser";
 
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,8 +26,18 @@ function SignUpForm() {
     type: "emailAlreadyExists" | "other";
   } | null>(null);
 
-  const { mutateAsync, isPending } = useSignUp();
+  /**===========
+   * SERVICES
+   ===========*/
+  // signUp
+  const { mutateAsync: mutateSignUp, isPending: isPendingSignUp } = useSignUp();
 
+  // user
+  const { mutateAsync: mutateUser, isPending: isPendingUser } = useUser();
+
+  /**===========
+   * REACT HOOK FORM
+   ===========*/
   const {
     register,
     handleSubmit,
@@ -41,7 +52,7 @@ function SignUpForm() {
       // Limpiar errores previos
       setServerError(null);
 
-      const result = await mutateAsync(data);
+      const result = await mutateSignUp(data);
 
       // Si hay error, mostrarlo en el componente
       if (!result.success && result.error) {
@@ -49,11 +60,19 @@ function SignUpForm() {
           message: result.error,
           type: result.errorType || "other",
         });
+
+        return;
+      }
+
+      if (result.success && result.userId) {
+        await mutateUser({ id: result.userId, names: data.name });
       }
     } catch (error) {
       console.error("Error en el registro:", error);
     }
   };
+
+  const isPending = isPendingSignUp || isPendingUser;
 
   return (
     <section className="flex items-center justify-center flex-1 p-8">

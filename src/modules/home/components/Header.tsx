@@ -1,10 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { User } from "@supabase/supabase-js";
+import { Loader2, Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
-function Header() {
+interface HeaderProps {
+  user: User | null;
+  isLoading: boolean;
+}
+
+function Header({ user, isLoading }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -35,10 +42,27 @@ function Header() {
           </ul>
         </nav>
         <div className="hidden space-x-5 text-sm md:block">
-          <a href="" className="hover:text-action hover:font-bold">Iniciar sesión</a>
-          <Button type="button" size="sm">
-            <a href="">Registrarse</a>
-          </Button>
+          {isLoading ? (
+            <Button type="button" size="sm">
+              <Loader2 className="size-[18px]" />
+            </Button>
+          ) : user ? (
+            <Button type="button" size="sm">
+              <Link href={"/dashboard"}>Dashboard</Link>
+            </Button>
+          ) : (
+            <>
+              <Link
+                href={"/login"}
+                className="hover:text-action hover:font-bold"
+              >
+                Iniciar sesión
+              </Link>
+              <Button type="button" size="sm">
+                <Link href={"/signup"}>Registrarsess</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="md:hidden">
@@ -78,7 +102,9 @@ function Header() {
           </ul>
         </nav>
         <div className="mt-5 space-x-8 text-sm">
-          <a href="" className="text-white hover:text-action hover:font-bold">Iniciar sesión</a>
+          <a href="" className="text-white hover:text-action hover:font-bold">
+            Iniciar sesión
+          </a>
           <Button type="button" size="sm">
             <a href="">Registrarse</a>
           </Button>
