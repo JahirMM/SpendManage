@@ -1,5 +1,6 @@
+import { logoutAction } from "@/src/modules/auth/logout/actions/logoutAction";
+
 import { useMutation } from "@tanstack/react-query";
-import { logoutAction } from "../actions/logoutAction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

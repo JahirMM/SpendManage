@@ -1,24 +1,7 @@
-export interface FormErrors {
-  title?: string;
-  description?: string;
-  type?: string;
-  closingDate?: string;
-  paymentDate?: string;
-  general?: string;
-}
-
 export interface AccountFormData {
   title: string;
-  description: string;
+  description: string | null;
   type: "card" | "normal" | "";
-  closingDate: number | "";
-  paymentDate: number | "";
+  closingDate: number | null;
+  paymentDate: number;
 }
-
-export const initialFormData: AccountFormData = {
-  title: "",
-  description: "",
-  type: "",
-  closingDate: "",
-  paymentDate: "",
-};

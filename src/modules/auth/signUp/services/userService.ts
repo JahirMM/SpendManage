@@ -1,4 +1,6 @@
-import { supabaseClient } from "@/src/shared/lib/supabaseClient";
+"use server";
+
+import { supabaseServer } from "@/src/shared/lib/supabaseServer";
 
 interface InserUserRequest {
   id: string;
@@ -6,7 +8,8 @@ interface InserUserRequest {
 }
 
 export const userService = async (request: InserUserRequest) => {
-  const { data, error } = await supabaseClient.from("users").insert(request);
+  const supabase = await supabaseServer();
+  const { data, error } = await supabase.from("users").insert(request);
 
   if (error) {
     throw error;
