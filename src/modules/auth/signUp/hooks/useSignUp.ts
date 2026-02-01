@@ -1,3 +1,4 @@
+import { useUserContext } from "@/src/shared/contexts/UserContext";
 import { signUpAction } from "../actions/signUpAction";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -11,16 +12,19 @@ interface RequestInterfa {
 
 export const useSignUp = () => {
   const router = useRouter();
+  const { refetch } = useUserContext();
 
   return useMutation({
     mutationFn: async (request: RequestInterfa) =>
       signUpAction(request.email, request.password, request.name),
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
       // Solo manejar éxito aquí, errores los maneja el componente
       if (result.success) {
         toast.success("¡Cuenta creada exitosamente!", {
           description: "Redirigiendo al dashboard...",
         });
+
+        await refetch();
 
         setTimeout(() => {
           router.push("/dashboard");

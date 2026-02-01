@@ -17,16 +17,16 @@ import {
 } from "@/components/ui/carousel";
 import AddAccountDialog from "@/src/modules/addAccount/components/AddAccountDialog";
 import { useGetAccounts } from "@/src/modules/dashboard/hooks/useGetAccounts";
-import { useUserContext } from "@/src/shared/contexts/UserContext";
+import Link from "next/link";
 
-function AccountsSection() {
-  const { user, isLoading: isUserLoading } = useUserContext();
-  const { data, isLoading: isAccountsLoading } = useGetAccounts(
-    user?.id ?? null,
-  );
+interface AccountsSectionProps {
+  userId: string;
+}
+
+function AccountsSection({ userId }: AccountsSectionProps) {
+  const { data, isLoading, isError, error } = useGetAccounts(userId);
 
   const accounts = data ?? [];
-  const isLoading = isUserLoading || isAccountsLoading;
 
   const [api, setApi] = useState<CarouselApi>();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -67,7 +67,7 @@ function AccountsSection() {
         {isLoading && (
           <div className="px-4 md:px-5 space-y-4">
             <Skeleton className="h-32 w-full rounded-lg md:max-w-[60%] md:mx-auto lg:min-w-[260px] lg:h-[358px]" />
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between my-5">
               <Skeleton className="h-6 w-32" />
               <Skeleton className="h-6 w-20" />
             </div>
@@ -93,8 +93,7 @@ function AccountsSection() {
           </div>
         )}
 
-        {/* ACCOUNTS LIST */}
-        {!isLoading && accounts.length > 0 && (
+        {!isLoading && accounts && accounts.length > 0 && (
           <Carousel setApi={setApi}>
             <CarouselContent className="px-4 md:p-0">
               {accounts.map((account) => (
@@ -110,7 +109,7 @@ function AccountsSection() {
             </CarouselContent>
             <div className="px-4 md:px-5">
               <div className="flex items-center justify-between mt-8">
-                <AccountExpenseDisplay />
+                <AccountExpenseDisplay accountId={accounts[currentIndex].id} />
                 <AccountNavigation
                   previous={handlePrevious}
                   next={handleNext}
@@ -120,7 +119,9 @@ function AccountsSection() {
               </div>
 
               <Button className="w-full mt-6" variant="default">
-                Ver detalles
+                <Link href={`/accounts/${accounts[currentIndex].id}`}>
+                  Ver detalles
+                </Link>
               </Button>
             </div>
           </Carousel>

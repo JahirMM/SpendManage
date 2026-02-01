@@ -1,16 +1,36 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
 import { getUserAction } from "@/src/shared/actions/getUserAction";
 
 export const useUser = () => {
-  return useQuery({
-    queryKey: ["user"],
-    queryFn: async () => getUserAction(),
-    staleTime: 1000 * 60 * 5,
-    // No reintentar si falla
-    retry: false,
-    // Refrescar cuando se vuelve a la pestaña
-    refetchOnWindowFocus: true,
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      setIsLoading(true);
+      const userData = await getUserAction();
+      setUser(userData);
+      setError(null);
+    } catch (err) {
+      setError(err as Error);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  return {
+    user,
+    isLoading,
+    error,
+    refetch: fetchUser,
+  };
 };

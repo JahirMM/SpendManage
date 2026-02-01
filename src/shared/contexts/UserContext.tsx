@@ -14,14 +14,14 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const { data: user, isLoading, error, refetch } = useUser();
+  const { user, isLoading, error, refetch } = useUser();
 
   return (
     <UserContext.Provider
       value={{
-        user: user ?? null,
+        user,
         isLoading,
-        error: error as Error | null,
+        error,
         refetch,
       }}
     >

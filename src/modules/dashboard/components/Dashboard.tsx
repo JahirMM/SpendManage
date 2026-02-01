@@ -1,3 +1,5 @@
+"use client";
+
 import MovementsSection from "@/src/modules/dashboard/components/movements/MovementsSection";
 
 import AccountsSection from "@/src/modules/dashboard/components/accounts/AccountsSection";
@@ -8,9 +10,21 @@ import StatsGrid from "@/src/modules/dashboard/components/stats/StatsGrid";
 
 import ExpensesChart from "@/src/modules/dashboard/components/charts/ExpensesChart";
 
+import DashboardSkeleton from "@/src/modules/dashboard/skeletons/DashboardSkeleton";
 import DashboardHeader from "@/src/modules/dashboard/components/DashboardHeader";
+import { useUserContext } from "@/src/shared/contexts/UserContext";
 
 function Dashboard() {
+  const { user, isLoading: isUserLoading } = useUserContext();
+
+  if (isUserLoading) {
+    return <DashboardSkeleton />;
+  }
+
+  if (!user) {
+    return <div>No user</div>;
+  }
+
   return (
     <div className="max-w-5xl px-4 py-3 mx-auto md:max-w-7xl xl:p-0">
       <DashboardHeader />
@@ -20,7 +34,7 @@ function Dashboard() {
 
           <ExpensesChart className="h-96 lg:hidden" />
 
-          <AccountsSection />
+          <AccountsSection userId={user.id} />
         </section>
 
         <section className="space-y-3 md:grid md:grid-cols-2 md:gap-3 lg:col-start-2 lg:col-end-4 lg:space-y-0">

@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@/src/shared/contexts/UserContext";
 import { loginAction } from "../actions/loginAction";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -10,11 +11,12 @@ interface LoginRequest {
 
 export const useLogin = () => {
   const router = useRouter();
+  const { refetch } = useUserContext();
 
   return useMutation({
     mutationFn: async (request: LoginRequest) =>
       loginAction(request.email, request.password),
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
       if (!result.success) {
         if (result.errorType === "invalidCredentials") {
           toast.error("Credenciales inválidas", {
@@ -33,6 +35,8 @@ export const useLogin = () => {
       toast.success("¡Bienvenido!", {
         description: "Redirigiendo al dashboard...",
       });
+
+      await refetch();
 
       setTimeout(() => {
         router.push("/dashboard");
