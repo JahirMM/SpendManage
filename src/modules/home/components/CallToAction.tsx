@@ -21,14 +21,18 @@ function CallToAction({ user, isLoading }: CallToActionProps) {
         </div>
       )}
       {!isLoading && user && (
-        <Button variant="default" size="lg" type="button">
-          <Link href={"/dashboard"}>Dashboard</Link>
-        </Button>
+        <Link href={"/dashboard"}>
+          <Button variant="default" size="lg" type="button">
+            Dashboard
+          </Button>
+        </Link>
       )}
       {!isLoading && !user && (
-        <Button variant="default" size="lg" type="button">
-          <Link href={"/signup"}>Comienza ahora</Link>
-        </Button>
+        <Link href={"/signup"}>
+          <Button variant="default" size="lg" type="button">
+            Comienza ahora
+          </Button>
+        </Link>
       )}
     </section>
   );

@@ -32,35 +32,32 @@ function Hero({ user, isLoading }: HeroProps) {
 
         {!isLoading && !user && (
           <>
-            <Button type="button" variant="default" size="lg">
-              <Link href={"/login"} className="flex items-center gap-3 text-sm">
+            <Link href={"/login"}>
+              <Button
+                type="button"
+                variant="default"
+                size="lg"
+                className="flex items-center gap-3 text-sm"
+              >
                 Comenzar
                 <MoveRight className="text-white size-4" />
-              </Link>
-            </Button>
+              </Button>
+            </Link>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              className="shadow-none bg-none text-sm"
-            >
-              <Link href={"/signup"} className="text-sm">
+            <Link href={"/signup"} className="text-sm shadow-none bg-none">
+              <Button type="button" variant="outline" size="lg">
                 Ingresar
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </>
         )}
         {!isLoading && user && (
-          <Button type="button" variant="default" size="lg">
-            <Link
-              href={"/dashboard"}
-              className="flex items-center gap-3 text-sm"
-            >
+          <Link href={"/dashboard"} className="flex items-center gap-3 text-sm">
+            <Button type="button" variant="default" size="lg">
               Dashboard
               <MoveRight className="text-white size-4" />
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         )}
       </div>
 

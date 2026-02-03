@@ -17,12 +17,8 @@ import { useUserContext } from "@/src/shared/contexts/UserContext";
 function Dashboard() {
   const { user, isLoading: isUserLoading } = useUserContext();
 
-  if (isUserLoading) {
+  if (isUserLoading || !user) {
     return <DashboardSkeleton />;
-  }
-
-  if (!user) {
-    return <div>No user</div>;
   }
 
   return (

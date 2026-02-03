@@ -47,9 +47,11 @@ function Header({ user, isLoading }: HeaderProps) {
               <Loader2 className="size-[18px]" />
             </Button>
           ) : user ? (
-            <Button type="button" size="sm">
-              <Link href={"/dashboard"}>Dashboard</Link>
-            </Button>
+            <Link href={"/dashboard"}>
+              <Button type="button" size="sm">
+                Dashboard
+              </Button>
+            </Link>
           ) : (
             <>
               <Link
@@ -58,9 +60,11 @@ function Header({ user, isLoading }: HeaderProps) {
               >
                 Iniciar sesión
               </Link>
-              <Button type="button" size="sm">
-                <Link href={"/signup"}>Registrarsess</Link>
-              </Button>
+              <Link href={"/signup"}>
+                <Button type="button" size="sm">
+                  Registrarse
+                </Button>
+              </Link>
             </>
           )}
         </div>

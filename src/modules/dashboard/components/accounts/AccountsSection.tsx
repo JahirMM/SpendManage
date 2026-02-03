@@ -75,7 +75,7 @@ function AccountsSection({ userId }: AccountsSectionProps) {
           </div>
         )}
 
-        {!isLoading && accounts.length === 0 && (
+        {!isLoading && !isError && accounts.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 px-4">
             <div className="rounded-full bg-muted p-4 mb-4">
               <Wallet className="size-8 text-muted-foreground" />
@@ -93,7 +93,18 @@ function AccountsSection({ userId }: AccountsSectionProps) {
           </div>
         )}
 
-        {!isLoading && accounts && accounts.length > 0 && (
+        {!isLoading && isError && (
+          <div className="flex flex-col items-center justify-center py-12 px-4">
+            <div className="rounded-full bg-muted p-4 mb-4">
+              <Wallet className="size-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              Error al cargar las cuentas
+            </h3>
+          </div>
+        )}
+
+        {!isLoading && !isError && accounts && accounts.length > 0 && (
           <Carousel setApi={setApi}>
             <CarouselContent className="px-4 md:p-0">
               {accounts.map((account) => (
@@ -118,11 +129,11 @@ function AccountsSection({ userId }: AccountsSectionProps) {
                 />
               </div>
 
-              <Button className="w-full mt-6" variant="default">
-                <Link href={`/accounts/${accounts[currentIndex].id}`}>
+              <Link href={`/accounts/${accounts[currentIndex].id}`}>
+                <Button className="w-full mt-6" variant="default">
                   Ver detalles
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           </Carousel>
         )}
