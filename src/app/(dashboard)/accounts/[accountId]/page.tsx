@@ -1,7 +1,16 @@
-import AccountDetails from "@/src/modules/account/components/AccountDetails";
+"use client";
 
-function page() {
-  return <AccountDetails />;
+import AccountDetails from "@/src/modules/account/components/AccountDetails";
+import { useParams } from "next/navigation";
+
+type PageParams = {
+  accountId: string;
+};
+
+function Page() {
+  const { accountId } = useParams<PageParams>();
+
+  return <AccountDetails accountId={accountId} />;
 }
 
-export default page;
+export default Page;

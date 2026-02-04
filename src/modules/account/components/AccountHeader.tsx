@@ -5,7 +5,19 @@ import WarningDialog from "@/src/shared/components/WarningDialog";
 import { MoveLeft, SquarePen, Trash } from "lucide-react";
 import { useState } from "react";
 
-function AccountHeader() {
+interface AccountHeaderProps {
+  title: string;
+  description: string | null;
+  closingDate: number | null;
+  paymentDate: number;
+}
+
+function AccountHeader({
+  title,
+  description,
+  closingDate,
+  paymentDate,
+}: AccountHeaderProps) {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
 
@@ -25,7 +37,7 @@ function AccountHeader() {
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-0">
           <div className="space-y-4">
             <div className="flex justify-between">
-              <h1 className="text-2xl font-bold lg:text-3xl">Tarjeta Lider</h1>
+              <h1 className="text-2xl font-bold lg:text-3xl">{title}</h1>
               <div className="flex gap-3 md:hidden">
                 <button
                   type="button"
@@ -45,15 +57,15 @@ function AccountHeader() {
                 </button>
               </div>
             </div>
-            <p className="text-sm">
-              Tarjeta de uso solo para compras de alimentos para casa
-            </p>
+            {description && <p className="text-sm">{description}</p>}
             <div className="flex gap-3 text-sm">
               <span className="px-4 py-0.5 bg-secondary rounded-2xl">
                 Tarjeta
               </span>
-              <span className="text-gray-600">Pago día 5</span>
-              <span className="text-gray-600">Cierre día 26</span>
+              <span className="text-gray-600">Pago día {paymentDate}</span>
+              {closingDate && (
+                <span className="text-gray-600">Cierre día {closingDate}</span>
+              )}
             </div>
           </div>
           <div className="hidden gap-3 md:flex md:items-center">
