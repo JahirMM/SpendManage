@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import { useGetMovementsByAccountId } from "../hooks/useGetMovementsByAccountId";
+
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -21,6 +23,12 @@ interface MovementsListProps {
 
 function MovementsList({ accountId }: MovementsListProps) {
   const [openDialog, setOpenDialog] = useState(false);
+
+  const {
+    data: movements,
+    isLoading,
+    isError,
+  } = useGetMovementsByAccountId(accountId);
 
   return (
     <>
@@ -60,9 +68,18 @@ function MovementsList({ accountId }: MovementsListProps) {
                 Completados (5)
               </Button>
             </div>
-            <div>
-              <MovementCard />
-            </div>
+            {isLoading && <p>Cargando movimientos...</p>}
+            {isError && <p>Error al cargar movimientos</p>}
+            {!isLoading && !isError && movements && movements.length === 0 && (
+              <p>No hay movimientos</p>
+            )}
+            {!isLoading &&
+              !isError &&
+              movements &&
+              movements.length > 0 &&
+              movements.map((movement) => (
+                <MovementCard key={movement.id} movement={movement} />
+              ))}
           </CardContent>
         </Card>
       </section>

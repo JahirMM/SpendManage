@@ -1,12 +1,18 @@
 import EditMovementDialog from "@/src/modules/editMovement/components/EditMovementDialog";
 import MovementDetails from "@/src/modules/account/components/MovementDetails";
 import { ProgressBar } from "@/src/shared/components/ProgressBar";
+import WarningDialog from "@/src/shared/components/WarningDialog";
+
+import { MovementInterface } from "@/src/shared/interfaces/movement";
 
 import { SquarePen, Trash } from "lucide-react";
 import { useState } from "react";
-import WarningDialog from "@/src/shared/components/WarningDialog";
 
-function MovementCard() {
+interface MovementCardProps {
+  movement: MovementInterface;
+}
+
+function MovementCard({ movement }: MovementCardProps) {
   const [openEditMovementDialog, setOpenEditMovementDialog] = useState(false);
   const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
 
@@ -17,7 +23,7 @@ function MovementCard() {
     <>
       <div className="p-4 rounded-lg border border-gray-200">
         <div className="flex justify-between items-center">
-          <p className="font-bold">Picada</p>
+          <p className="font-bold">{movement.title}</p>
           <div>
             <button
               type="button"
@@ -37,9 +43,9 @@ function MovementCard() {
             </button>
           </div>
         </div>
-        <p className="mt-3 mb-10 text-sm">Se compro pollo</p>
+        <p className="mt-3 mb-10 text-sm">{movement.description}</p>
         <div className="space-y-4">
-          <MovementDetails />
+          <MovementDetails movement={movement} />
           <ProgressBar progress={30} />
         </div>
       </div>
