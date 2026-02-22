@@ -15,8 +15,13 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-function MovementsList() {
+interface MovementsListProps {
+  accountId: string;
+}
+
+function MovementsList({ accountId }: MovementsListProps) {
   const [openDialog, setOpenDialog] = useState(false);
+
   return (
     <>
       <section aria-label="Listado de cuentas" className="mt-5">
@@ -64,6 +69,7 @@ function MovementsList() {
       <AddMovementDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        accountId={accountId}
       />
     </>
   );

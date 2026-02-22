@@ -10,6 +10,7 @@ interface AccountHeaderProps {
   description: string | null;
   closingDate: number | null;
   paymentDate: number;
+  type: string;
 }
 
 function AccountHeader({
@@ -17,6 +18,7 @@ function AccountHeader({
   description,
   closingDate,
   paymentDate,
+  type,
 }: AccountHeaderProps) {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
@@ -60,7 +62,7 @@ function AccountHeader({
             {description && <p className="text-sm">{description}</p>}
             <div className="flex gap-3 text-sm">
               <span className="px-4 py-0.5 bg-secondary rounded-2xl">
-                Tarjeta
+                {type === "credit" ? "Tarjeta" : "Cuenta Normal"}
               </span>
               <span className="text-gray-600">Pago día {paymentDate}</span>
               {closingDate && (

@@ -12,11 +12,13 @@ import { Dispatch, SetStateAction } from "react";
 interface AddMovementDialogProps {
   openDialog: boolean;
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
+  accountId: string;
 }
 
 function AddMovementDialog({
   openDialog,
   setOpenDialog,
+  accountId,
 }: AddMovementDialogProps) {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -26,7 +28,7 @@ function AddMovementDialog({
             Agregar movimiento
           </DialogTitle>
         </DialogHeader>
-        <AddMovementForm setOpenDialog={setOpenDialog} />
+        <AddMovementForm setOpenDialog={setOpenDialog} accountId={accountId} />
       </DialogContent>
     </Dialog>
   );

@@ -41,13 +41,14 @@ function AccountDetails({ accountId }: AccountDetailsProps) {
         description={data.description}
         closingDate={data.closing_date}
         paymentDate={data.payment_date}
+        type={data.type}
       />
       <div className="grid grid-cols-1 gap-3 mt-5 md:grid-cols-2">
         <AccountStats />
         <AccountChart />
       </div>
       <StatementDownload />
-      <MovementsList />
+      <MovementsList accountId={accountId} />
     </div>
   );
 }
