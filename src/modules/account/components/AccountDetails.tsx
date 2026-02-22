@@ -6,6 +6,7 @@ import AccountHeader from "@/src/modules/account/components/AccountHeader";
 import MovementsList from "@/src/modules/account/components/MovementsList";
 import AccountChart from "@/src/modules/account/components/AccountChart";
 import AccountStats from "@/src/modules/account/components/AccountStats";
+import AccountDetailsSkeleton from "../skeletons/AccountDetailsSkeleton";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -26,7 +27,7 @@ function AccountDetails({ accountId }: AccountDetailsProps) {
 
   // Siempre renderizar todos los hooks antes de mostrar contenido condicional
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <AccountDetailsSkeleton />;
   }
 
   if (isError || !data) {
