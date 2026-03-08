@@ -3,6 +3,7 @@
 import EditAccountDialog from "@/src/modules/editAccount/components/EditAccountDialog";
 import WarningDialog from "@/src/shared/components/WarningDialog";
 import { MoveLeft, SquarePen, Trash } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 interface AccountHeaderProps {
@@ -30,12 +31,12 @@ function AccountHeader({
   return (
     <>
       <header>
-        <button
-          type="button"
+        <Link
+          href="/dashboard"
           className="flex gap-2 mb-5 text-base font-black text-action"
         >
           <MoveLeft className="size-5" /> Volver
-        </button>
+        </Link>
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-0">
           <div className="space-y-4">
             <div className="flex justify-between">
