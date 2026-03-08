@@ -13,26 +13,52 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { useGetMovementsByAccountId } from "../hooks/useGetMovementsByAccountId";
+import {
+  getActiveMovements,
+  getCompletedMovements,
+} from "@/src/shared/lib/movementUtils";
 
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
 interface MovementsListProps {
   accountId: string;
+  closingDate: number | null;
 }
 
-function MovementsList({ accountId }: MovementsListProps) {
+type FilterType = "active" | "completed";
+
+function MovementsList({ accountId, closingDate }: MovementsListProps) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [filter, setFilter] = useState<FilterType>("active");
 
   const {
-    data: movements,
+    data: movements = [],
     isLoading,
     isError,
   } = useGetMovementsByAccountId(accountId);
 
+  const now = new Date();
+  const refYear = now.getFullYear();
+  const refMonth = now.getMonth();
+
+  const activeMovements = getActiveMovements(
+    movements,
+    closingDate,
+    refYear,
+    refMonth,
+  );
+  const completedMovements = getCompletedMovements(
+    movements,
+    closingDate,
+    refYear,
+    refMonth,
+  );
+  const displayed = filter === "active" ? activeMovements : completedMovements;
+
   return (
     <>
-      <section aria-label="Listado de cuentas" className="mt-5">
+      <section aria-label="Listado de movimientos" className="mt-5">
         <Card>
           <CardHeader className="flex justify-between items-center">
             <CardTitle className="text-base font-bold text-primary">
@@ -59,26 +85,44 @@ function MovementsList({ accountId }: MovementsListProps) {
               </Button>
             </CardAction>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-3 my-4 sm:grid-cols-2">
-              <Button type="button" variant="default" size="lg">
-                Activos (11)
+          <CardContent className="space-y-3">
+            {/* Filtros */}
+            <div className="grid grid-cols-1 gap-2 my-4 sm:grid-cols-2">
+              <Button
+                type="button"
+                variant={filter === "active" ? "default" : "outline"}
+                size="lg"
+                onClick={() => setFilter("active")}
+              >
+                Activos ({activeMovements.length})
               </Button>
-              <Button type="button" variant="outline" size="lg">
-                Completados (5)
+              <Button
+                type="button"
+                variant={filter === "completed" ? "default" : "outline"}
+                size="lg"
+                onClick={() => setFilter("completed")}
+              >
+                Completados ({completedMovements.length})
               </Button>
             </div>
+
             {isLoading && <p>Cargando movimientos...</p>}
             {isError && <p>Error al cargar movimientos</p>}
-            {!isLoading && !isError && movements && movements.length === 0 && (
-              <p>No hay movimientos</p>
+            {!isLoading && !isError && displayed.length === 0 && (
+              <p className="text-sm text-gray-500">
+                {filter === "active"
+                  ? "No hay movimientos activos"
+                  : "No hay movimientos completados"}
+              </p>
             )}
             {!isLoading &&
               !isError &&
-              movements &&
-              movements.length > 0 &&
-              movements.map((movement) => (
-                <MovementCard key={movement.id} movement={movement} />
+              displayed.map((movement) => (
+                <MovementCard
+                  key={movement.id}
+                  movement={movement}
+                  closingDay={closingDate}
+                />
               ))}
           </CardContent>
         </Card>

@@ -1,3 +1,5 @@
+"use client";
+
 import EditMovementDialog from "@/src/modules/editMovement/components/EditMovementDialog";
 import MovementDetails from "@/src/modules/account/components/MovementDetails";
 import { ProgressBar } from "@/src/shared/components/ProgressBar";
@@ -5,19 +7,52 @@ import WarningDialog from "@/src/shared/components/WarningDialog";
 
 import { MovementInterface } from "@/src/shared/interfaces/movement";
 
+import {
+  getInstallmentAmount,
+  getPaidInstallments,
+  getRemainingAmount,
+  getProgressPercent,
+} from "@/src/shared/lib/movementUtils";
+
 import { SquarePen, Trash } from "lucide-react";
 import { useState } from "react";
 
 interface MovementCardProps {
   movement: MovementInterface;
+  closingDay: number | null;
 }
 
-function MovementCard({ movement }: MovementCardProps) {
+function MovementCard({ movement, closingDay }: MovementCardProps) {
   const [openEditMovementDialog, setOpenEditMovementDialog] = useState(false);
   const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
 
   const toggleWarningDialog = () =>
     setShowEditDialogWarningDialog(!showWarningDialog);
+
+  // Fecha de referencia: hoy
+  const now = new Date();
+  const refYear = now.getFullYear();
+  const refMonth = now.getMonth(); // 0-indexed
+
+  const paidInstallments = getPaidInstallments(
+    movement,
+    closingDay,
+    refYear,
+    refMonth,
+  );
+  const amountPerInstallment = getInstallmentAmount(movement);
+  const remainingAmount = getRemainingAmount(
+    movement,
+    closingDay,
+    refYear,
+    refMonth,
+  );
+  const progressPercent = getProgressPercent(
+    movement,
+    closingDay,
+    refYear,
+    refMonth,
+  );
 
   return (
     <>
@@ -45,8 +80,13 @@ function MovementCard({ movement }: MovementCardProps) {
         </div>
         <p className="mt-3 mb-10 text-sm">{movement.description}</p>
         <div className="space-y-4">
-          <MovementDetails movement={movement} />
-          <ProgressBar progress={30} />
+          <MovementDetails
+            movement={movement}
+            paidInstallments={paidInstallments}
+            amountPerInstallment={amountPerInstallment}
+            remainingAmount={remainingAmount}
+          />
+          <ProgressBar progress={progressPercent} />
         </div>
       </div>
       <EditMovementDialog

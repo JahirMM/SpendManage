@@ -166,11 +166,16 @@ function AddMovementForm({ setOpenDialog, accountId }: AddMovementFormProps) {
         )}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="">Fecha movimiento</Label>
+        <Label htmlFor="date">Fecha movimiento</Label>
         <Input
-          id=""
+          id="date"
           type="date"
-          {...register("date", { required: "Cambo obligatorio" })}
+          max={new Date().toISOString().split("T")[0]}
+          {...register("date", {
+            required: "Campo obligatorio",
+            validate: (v) =>
+              new Date(v) <= new Date() || "La fecha no puede ser mayor a hoy",
+          })}
           className={`border ${errors.date ? "border-red-500" : ""}`}
         />
         {errors.date && (

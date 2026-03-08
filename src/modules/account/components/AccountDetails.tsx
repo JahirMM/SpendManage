@@ -2,6 +2,7 @@
 
 import StatementDownload from "@/src/modules/account/components/StatementDownload";
 import { useGetAccountById } from "@/src/modules/account/hooks/useGetAccountById";
+import { useGetMovementsByAccountId } from "@/src/modules/account/hooks/useGetMovementsByAccountId";
 import AccountHeader from "@/src/modules/account/components/AccountHeader";
 import MovementsList from "@/src/modules/account/components/MovementsList";
 import AccountChart from "@/src/modules/account/components/AccountChart";
@@ -17,6 +18,7 @@ interface AccountDetailsProps {
 function AccountDetails({ accountId }: AccountDetailsProps) {
   const router = useRouter();
   const { data, isLoading, isError } = useGetAccountById(accountId);
+  const { data: movements = [] } = useGetMovementsByAccountId(accountId);
 
   useEffect(() => {
     // Solo redirigir cuando terminó de cargar Y hay un error
@@ -44,11 +46,11 @@ function AccountDetails({ accountId }: AccountDetailsProps) {
         type={data.type}
       />
       <div className="grid grid-cols-1 gap-3 mt-5 md:grid-cols-2">
-        <AccountStats />
-        <AccountChart />
+        <AccountStats movements={movements} closingDay={data.closing_date} />
+        <AccountChart movements={movements} closingDay={data.closing_date} />
       </div>
-      <StatementDownload />
-      <MovementsList accountId={accountId} />
+      <StatementDownload account={data} movements={movements} />
+      <MovementsList accountId={accountId} closingDate={data.closing_date} />
     </div>
   );
 }
