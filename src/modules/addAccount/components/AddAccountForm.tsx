@@ -24,7 +24,7 @@ function AddAccountForm({ setOpenDialog }: AddAccountFormProps) {
   /**================
    * SERVICIOS
    ================*/
-  const { mutateAsync: insertAccount } = useInsertAccounts();
+  const { mutateAsync: insertAccount, isPending } = useInsertAccounts();
 
   /**================
    * REACT HOOK FORM
@@ -165,11 +165,17 @@ function AddAccountForm({ setOpenDialog }: AddAccountFormProps) {
           type="button"
           className="border border-gray-300 hover:border-action hover:bg-action/20 dark:hover:bg-action/20"
           onClick={() => setOpenDialog(false)}
+          disabled={isPending}
         >
           Cancelar
         </Button>
-        <Button variant="default" type="submit" className="font-bold">
-          Crear cuenta
+        <Button
+          variant="default"
+          type="submit"
+          className="font-bold"
+          disabled={isPending}
+        >
+          {isPending ? "Creando cuenta..." : "Crear cuenta"}
         </Button>
       </div>
     </form>

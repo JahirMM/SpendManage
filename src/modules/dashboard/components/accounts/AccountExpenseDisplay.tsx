@@ -1,32 +1,27 @@
-import { useTotalMonthlyExpenses } from "@/src/modules/dashboard/hooks/useGetTotalMonthlyExpenses";
-import { useEffect } from "react";
+import { useGetMovementsByAccountId } from "@/src/modules/account/hooks/useGetMovementsByAccountId";
+import { getMonthlyPayment } from "@/src/shared/lib/movementUtils";
 
 interface AccountExpenseDisplayProps {
   accountId: string;
+  closingDay: number | null;
 }
 
-function AccountExpenseDisplay({ accountId }: AccountExpenseDisplayProps) {
-  const {
-    fetchExpenses,
-    data: totalMonthlyExpenses,
-    isLoading: isTotalMonthlyExpensesLoading,
-    isError,
-    error,
-  } = useTotalMonthlyExpenses();
+function AccountExpenseDisplay({
+  accountId,
+  closingDay,
+}: AccountExpenseDisplayProps) {
+  const { data: movements = [] } = useGetMovementsByAccountId(accountId);
 
-  useEffect(() => {
-    if (accountId) {
-      fetchExpenses(accountId, new Date());
-    }
-  }, [accountId]);
+  const now = new Date();
+  const refYear = now.getFullYear();
+  const refMonth = now.getMonth();
 
-  if (isTotalMonthlyExpensesLoading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error?.message}</div>;
-  }
+  const monthlyPayment = getMonthlyPayment(
+    movements,
+    closingDay,
+    refYear,
+    refMonth,
+  );
 
   return (
     <div>
@@ -34,7 +29,7 @@ function AccountExpenseDisplay({ accountId }: AccountExpenseDisplayProps) {
       <div>
         <span className="mr-1 text-sm font-semibold">$</span>
         <span className="text-lg font-bold md:text-2xl">
-          {totalMonthlyExpenses ? totalMonthlyExpenses.toFixed(2) : "0.00"}
+          {monthlyPayment.toLocaleString("es-CL")}
         </span>
       </div>
     </div>

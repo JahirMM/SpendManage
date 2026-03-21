@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface StatCardProps {
   title: string;
-  value: number;
+  value: string;
   isMoney: boolean;
 }
 function StatCard({ title, value, isMoney }: StatCardProps) {

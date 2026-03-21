@@ -23,10 +23,10 @@ function Dashboard() {
 
   return (
     <div className="max-w-5xl px-4 py-3 mx-auto md:max-w-7xl xl:p-0">
-      <DashboardHeader />
+      <DashboardHeader userId={user.id} />
       <div className="grid grid-cols-1 gap-3 mt-5 lg:grid-cols-3">
         <section className="flex flex-col gap-3">
-          <TotalExpenseCard />
+          <TotalExpenseCard userId={user.id} />
 
           <ExpensesChart className="h-96 lg:hidden" />
 
@@ -35,11 +35,11 @@ function Dashboard() {
 
         <section className="space-y-3 md:grid md:grid-cols-2 md:gap-3 lg:col-start-2 lg:col-end-4 lg:space-y-0">
           <div className="space-y-3">
-            <ReductionCard />
-            <StatsGrid />
+            <ReductionCard userId={user.id} />
+            <StatsGrid userId={user.id} />
           </div>
 
-          <MovementsSection />
+          <MovementsSection userId={user.id} />
 
           <ExpensesChart className="hidden h-96 col-start-1 col-end-3 lg:block" />
         </section>

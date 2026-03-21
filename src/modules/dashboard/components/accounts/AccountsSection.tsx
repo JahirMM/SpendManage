@@ -120,7 +120,10 @@ function AccountsSection({ userId }: AccountsSectionProps) {
             </CarouselContent>
             <div className="px-4 md:px-5">
               <div className="flex items-center justify-between mt-8">
-                <AccountExpenseDisplay accountId={accounts[currentIndex].id} />
+                <AccountExpenseDisplay
+                  accountId={accounts[currentIndex].id}
+                  closingDay={accounts[currentIndex].closing_date}
+                />
                 <AccountNavigation
                   previous={handlePrevious}
                   next={handleNext}
