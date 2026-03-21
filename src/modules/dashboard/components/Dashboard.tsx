@@ -28,7 +28,7 @@ function Dashboard() {
         <section className="flex flex-col gap-3">
           <TotalExpenseCard userId={user.id} />
 
-          <ExpensesChart className="h-96 lg:hidden" />
+          <ExpensesChart className="h-96 lg:hidden" userId={user.id} />
 
           <AccountsSection userId={user.id} />
         </section>
@@ -41,7 +41,7 @@ function Dashboard() {
 
           <MovementsSection userId={user.id} />
 
-          <ExpensesChart className="hidden h-96 col-start-1 col-end-3 lg:block" />
+          <ExpensesChart className="hidden h-96 col-start-1 col-end-3 lg:block" userId={user.id} />
         </section>
       </div>
     </div>

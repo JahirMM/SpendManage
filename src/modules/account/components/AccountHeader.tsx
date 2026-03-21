@@ -2,31 +2,36 @@
 
 import EditAccountDialog from "@/src/modules/editAccount/components/EditAccountDialog";
 import WarningDialog from "@/src/shared/components/WarningDialog";
+import { useDeleteAccount } from "@/src/modules/account/hooks/useDeleteAccount";
+import { AccountInterface } from "@/src/modules/dashboard/interfaces/accountInterface";
 import { MoveLeft, SquarePen, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 
 interface AccountHeaderProps {
-  title: string;
-  description: string | null;
-  closingDate: number | null;
-  paymentDate: number;
-  type: string;
+  account: AccountInterface;
 }
 
-function AccountHeader({
-  title,
-  description,
-  closingDate,
-  paymentDate,
-  type,
-}: AccountHeaderProps) {
+function AccountHeader({ account }: AccountHeaderProps) {
+  const router = useRouter();
   const [showEditDialog, setShowEditDialog] = useState(false);
-  const [showWarningDialog, setShowEditDialogWarningDialog] = useState(false);
+  const [showWarningDialog, setShowWarningDialog] = useState(false);
+
+  const { mutateAsync: deleteAccount, isPending: isDeleting } =
+    useDeleteAccount();
 
   const toggleEditDialog = () => setShowEditDialog(!showEditDialog);
-  const toggleWarningDialog = () =>
-    setShowEditDialogWarningDialog(!showWarningDialog);
+  const toggleWarningDialog = () => setShowWarningDialog(!showWarningDialog);
+
+  const handleDelete = async () => {
+    try {
+      await deleteAccount(account.id);
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error al eliminar la cuenta:", error);
+    }
+  };
 
   return (
     <>
@@ -40,7 +45,7 @@ function AccountHeader({
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-0">
           <div className="space-y-4">
             <div className="flex justify-between">
-              <h1 className="text-2xl font-bold lg:text-3xl">{title}</h1>
+              <h1 className="text-2xl font-bold lg:text-3xl">{account.title}</h1>
               <div className="flex gap-3 md:hidden">
                 <button
                   type="button"
@@ -60,14 +65,18 @@ function AccountHeader({
                 </button>
               </div>
             </div>
-            {description && <p className="text-sm">{description}</p>}
+            {account.description && (
+              <p className="text-sm">{account.description}</p>
+            )}
             <div className="flex gap-3 text-sm">
               <span className="px-4 py-0.5 bg-secondary rounded-2xl">
-                {type === "credit" ? "Tarjeta" : "Cuenta Normal"}
+                {account.type === "credit" ? "Tarjeta" : "Cuenta Normal"}
               </span>
-              <span className="text-gray-600">Pago día {paymentDate}</span>
-              {closingDate && (
-                <span className="text-gray-600">Cierre día {closingDate}</span>
+              <span className="text-gray-600">Pago día {account.payment_date}</span>
+              {account.closing_date && (
+                <span className="text-gray-600">
+                  Cierre día {account.closing_date}
+                </span>
               )}
             </div>
           </div>
@@ -94,14 +103,15 @@ function AccountHeader({
       <EditAccountDialog
         open={showEditDialog}
         setShowEditDialog={setShowEditDialog}
+        account={account}
       />
       <WarningDialog
         open={showWarningDialog}
         onOpenChange={toggleWarningDialog}
         title="Eliminar cuenta"
-        description="¿Estás seguro de eliminar esta cuenta?"
-        actionLabel="Eliminar"
-        onAction={() => console.log("Eliminar")}
+        description="¿Estás seguro de eliminar esta cuenta? Esta acción no se puede deshacer."
+        actionLabel={isDeleting ? "Eliminando..." : "Eliminar"}
+        onAction={handleDelete}
       />
     </>
   );

@@ -38,13 +38,7 @@ function AccountDetails({ accountId }: AccountDetailsProps) {
 
   return (
     <div className="max-w-5xl px-4 py-3 mx-auto md:max-w-7xl xl:px-0">
-      <AccountHeader
-        title={data.title}
-        description={data.description}
-        closingDate={data.closing_date}
-        paymentDate={data.payment_date}
-        type={data.type}
-      />
+      <AccountHeader account={data} />
       <div className="grid grid-cols-1 gap-3 mt-5 md:grid-cols-2">
         <AccountStats movements={movements} closingDay={data.closing_date} />
         <AccountChart movements={movements} closingDay={data.closing_date} />
