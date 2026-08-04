@@ -4,7 +4,7 @@ import { useLogout } from "@/src/modules/auth/logout/hooks/useLogout";
 import { useGetUser } from "../hooks/useGetUser";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { TrendingDown } from "lucide-react";
+import { TrendingDown, Repeat } from "lucide-react";
 
 interface DashboardHeaderProps {
   userId: string;
@@ -29,6 +29,12 @@ function DashboardHeader({ userId }: DashboardHeaderProps) {
         Bienvenido de nuevo, <span className="font-bold">{user?.name}</span>
       </p>
       <div className="flex items-center gap-2">
+        <Link href="/subscriptions">
+          <Button type="button" size="sm" variant="outline" className="gap-1.5 border-secondary text-secondary hover:bg-secondary/10 hover:text-secondary">
+            <Repeat className="size-4" />
+            Suscripciones
+          </Button>
+        </Link>
         <Link href="/expenses">
           <Button type="button" size="sm" variant="outline" className="gap-1.5 border-action text-action hover:bg-action/10 hover:text-action">
             <TrendingDown className="size-4" />
